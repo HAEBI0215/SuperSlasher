@@ -20,11 +20,11 @@ public class SkillControll : MonoBehaviour
     public void RushSlash(int index)
     {
         Debug.Log("돌진베기");
-        Debug.Log(equippedSkills[index].skillName + " 사용/데미지: " + equippedSkills[index].damage);
+        Debug.Log(equippedSkills[index].skillName + " 사용/데미지: " + equippedSkills[index].damage + " / 코스트: " + equippedSkills[index].coast);
     }
     public void ThrowsScythe(int index)
     {
         Debug.Log("낫 투척");
-        Debug.Log(equippedSkills[index].skillName + " 사용/데미지: " + equippedSkills[index].damage);
+        Debug.Log(equippedSkills[index].skillName + " 사용/데미지: " + equippedSkills[index].damage + " / 코스트: " + equippedSkills[index].coast);
     }
 }
