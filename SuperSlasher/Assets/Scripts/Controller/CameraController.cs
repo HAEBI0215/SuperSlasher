@@ -7,11 +7,7 @@ using Cinemachine;
 public class CameraController : MonoBehaviour
 {
     PlayerMove playerMove;
-    CinemachineFreeLook freeLook;
-
-    public Transform rCamPos;
-    public Transform lCamPos;
-    public Transform fCamPos;
+    CinemachineFreeLook freeLook;   
 
     void Start()
     {
@@ -22,24 +18,13 @@ public class CameraController : MonoBehaviour
         playerMove = FindObjectOfType<PlayerMove>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    public void MoveCurrentPos()
+    void LateUpdate()
     {
-        if (playerMove.isRunning == true)
-        {
-            Debug.Log("중앙캠");
-            freeLook.Follow = GameObject.Find("fCamPos").transform;
-            freeLook.LookAt = GameObject.Find("fCamPos").transform;
-        }
-        else
-        {
-            freeLook.Follow = GameObject.Find("rCamPos").transform;
-            freeLook.LookAt = GameObject.Find("rCamPos").transform;
-        }
+        
     }
 }
