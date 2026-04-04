@@ -9,7 +9,6 @@ public class PlayerManager : MonoBehaviour
     public int currentPlayerHp;
 
     public SkillControll skillControll;
-    public PlayerMove playerMove;
 
     void Start()
     {
@@ -24,14 +23,14 @@ public class PlayerManager : MonoBehaviour
 
     private void ExcuteSkill()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            skillControll.RushSlash(0);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            skillControll.ThrowsScythe(1);
-        }
+        // if (Input.GetKeyDown(KeyCode.Q))
+        // {
+        //     skillControll.RushSlash(0);
+        // }
+        // if (Input.GetKeyDown(KeyCode.E))
+        // {
+        //     skillControll.ThrowsScythe(1);
+        // }
     }
 
     public void TakeDamage(int damage)

@@ -192,7 +192,7 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.R) && isSkillReady)
         {
             currentSpeed = hyperSprintSpeed;
-            // hyperSprintGauge -= hyperSprintCost * Time.deltaTime;
+            hyperSprintGauge -= hyperSprintCost * Time.deltaTime;
             if (hyperSprintGauge <= 0) isSkillReady = false;
         }
     }
