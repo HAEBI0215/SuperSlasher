@@ -7,6 +7,6 @@ public class SkillData : ScriptableObject
 {
     public string skillName;
     public string coolDown;
-    public int coast;
+    public GameObject skillPrefab;
     public int damage;
 }

@@ -7,8 +7,19 @@ public class PlayerMove : MonoBehaviour
     [Header("움직임")]
     public float runSpeed = 8f;
     public float sprintSpeed = 15f;
+    public float hyperSprintSpeed = 30f;
     public float accelerationTime = 1f;
     public float rotateSpeed = 10f;
+
+    [Header("스킬")]
+    public float hyperSprintGauge = 0.0f;
+    public float maxHyperSprintGauge = 100.0f;
+    public float hyperSprintCost = 5.0f;
+
+    public bool isSkillReady = false;
+
+    [Header("에프터 이미지")]
+    public MonoBehaviour[] afterImage;
 
     [Header("점프")]
     public float jumpForce = 7f;
@@ -32,8 +43,23 @@ public class PlayerMove : MonoBehaviour
     public Rigidbody rb;
     public Transform camPos;
     public Animator anim;
+    public PlayerManager pm;
 
     private Vector2 moveInput;
+
+    void Start()
+    {
+        hyperSprintGauge = maxHyperSprintGauge;
+        if (hyperSprintGauge <= 0)
+        {
+            isSkillReady = false;
+            return;
+        }
+        else if (hyperSprintGauge >= 0)
+        {
+            isSkillReady = true;
+        }
+    }
 
     void Update()
     {
@@ -42,19 +68,40 @@ public class PlayerMove : MonoBehaviour
 
         isRunning = Input.GetKey(runKey);
 
+        bool isHyperSprinting = isRunning && Input.GetKey(KeyCode.R) && isSkillReady && inputMagnitude > 0.1f;
+        foreach (var script in afterImage)
+        {
+            if (script != null)
+            {
+                script.enabled = isHyperSprinting;
+            }
+        }
+
         isGrounded = Physics.SphereCast(groundCheck.position, 0.2f, Vector3.down, out _, groundDistance, groundLayer);
 
         float targetSpeed = 0f;
         if (inputMagnitude > 0.1f)
         {
-            targetSpeed = isRunning ? sprintSpeed : runSpeed;
+            if (isHyperSprinting) 
+            {
+                targetSpeed = hyperSprintSpeed;
+            }
+            else 
+            {
+                targetSpeed = isRunning ? sprintSpeed : runSpeed;
+            }
         }
 
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime / accelerationTime);
 
-        if (Input.GetKeyDown(jumpKey))
+        if (isHyperSprinting)
         {
-            Jump();
+            hyperSprintGauge -= hyperSprintCost * Time.deltaTime;
+            if (hyperSprintGauge <= 0) 
+            {
+                hyperSprintGauge = 0;
+                isSkillReady = false;
+            }
         }
 
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
@@ -89,6 +136,11 @@ public class PlayerMove : MonoBehaviour
         animSpeed = Mathf.Clamp(animSpeed, 0f, 1.2f);
 
         anim.SetFloat("AnimSpeed", animSpeed);
+        HyperSprint();
+        if (Input.GetKeyDown(jumpKey))
+        {
+            Jump();
+        }
     }
 
     void FixedUpdate()
@@ -133,5 +185,15 @@ public class PlayerMove : MonoBehaviour
         isGrounded = false;
 
         anim.SetTrigger("Jump");
+    }
+
+    public void HyperSprint()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.R) && isSkillReady)
+        {
+            currentSpeed = hyperSprintSpeed;
+            // hyperSprintGauge -= hyperSprintCost * Time.deltaTime;
+            if (hyperSprintGauge <= 0) isSkillReady = false;
+        }
     }
 }
