@@ -5,7 +5,6 @@ using UnityEngine;
 public class SkillControll : MonoBehaviour
 {
     public SkillData[] equippedSkills = new SkillData[3];
-
     void Start()
     {
         
@@ -26,5 +25,11 @@ public class SkillControll : MonoBehaviour
     {
         Debug.Log("낫 투척");
         Debug.Log(equippedSkills[index].skillName + " 사용/데미지: " + equippedSkills[index].damage);
+    }
+
+    public void ULT(int index)
+    {
+        Debug.Log("궁극기");
+        
     }
 }

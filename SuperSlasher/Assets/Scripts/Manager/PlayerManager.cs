@@ -8,6 +8,11 @@ public class PlayerManager : MonoBehaviour
     public int maxPlayerHp = 100;
     public int currentPlayerHp;
 
+    [Header("스킬 키")]
+    public KeyCode rushSlashKey = KeyCode.Q;
+    public KeyCode throwScytheKey = KeyCode.E;
+    public KeyCode ultKey = KeyCode.R;
+
     public SkillControll skillControll;
 
     void Start()
@@ -23,14 +28,25 @@ public class PlayerManager : MonoBehaviour
 
     private void ExcuteSkill()
     {
-        // if (Input.GetKeyDown(KeyCode.Q))
-        // {
-        //     skillControll.RushSlash(0);
-        // }
-        // if (Input.GetKeyDown(KeyCode.E))
-        // {
-        //     skillControll.ThrowsScythe(1);
-        // }
+        if (skillControll == null)
+        {
+            return;
+        }
+
+        if (Input.GetKeyDown(rushSlashKey))
+        {
+            skillControll.RushSlash(0);
+        }
+
+        if (Input.GetKeyDown(throwScytheKey))
+        {
+            skillControll.ThrowsScythe(1);
+        }
+
+        if (Input.GetKeyDown(ultKey))
+        {
+            skillControll.ULT(2);
+        }
     }
 
     public void TakeDamage(int damage)
